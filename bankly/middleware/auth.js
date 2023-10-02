@@ -51,10 +51,12 @@ function authUser(req, res, next) {
       let payload = jwt.decode(token);
       req.curr_username = payload.username;
       req.curr_admin = payload.admin;
+      return next();
+    } else {
+      // added a response with an error status and error message code.
+      res.status(401).json({ error: 'Authentication failed' });
     }
-    return next();
   } catch (err) {
-    err.status = 401;
     return next(err);
   }
 } // end
