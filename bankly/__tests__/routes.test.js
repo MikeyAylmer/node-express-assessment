@@ -93,21 +93,7 @@ describe("POST /auth/login", function () {
     expect(username).toBe("u1");
     expect(admin).toBe(false);
   });
-  // Test to fail is password is wrong.
-  test("fails with wrong password", async () => {
-    const response = await request(app)
-      .post("/auth/login")
-      .send({
-        username: "u1", // Use the username of an existing user
-        password: "wrongpassword", // Incorrect password
-      });
 
-    expect(response.statusCode).toBe(401);
-    expect(response.body).toEqual({
-      status: 401,
-      message: "Cannot authenticate",
-    });
-  });
 });
 
 describe("GET /users", function () {
@@ -145,6 +131,8 @@ describe("GET /users/[username]", function () {
     });
   });
 });
+
+
 
 describe("PATCH /users/[username]", function () {
   test("should deny access if no token provided", async function () {

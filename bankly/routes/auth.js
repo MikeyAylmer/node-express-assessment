@@ -21,6 +21,10 @@ router.post('/register', async function(req, res, next) {
     const token = createTokenForUser(username, user.admin);
     return res.status(201).json({ token });
   } catch (err) {
+    // added error code for specific username duplication.
+    if (e.code === '23505') {
+      return next(new ExpressError("Username taken. Please pick another!", 400));
+    }
     return next(err);
   }
 }); // end
